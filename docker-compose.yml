@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: $DB_SCHEMA
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+    volumes:
+      - ./db/volumes:/var/lib/mysql
+    container_name: "ojdl2-db"
+    network_mode: host
+  app:
+    build:
+      context: ./app
+      args:
+        PORTS_HTTP: $PORTS_HTTP
+        PORTS_HTTPS: $PORTS_HTTPS
+    env_file:
+      - .env
+    privileged: true
+    volumes:
+      - ./app/data/prob:/ojdl2/data/prob
+      - ./app/data/sub:/ojdl2/data/sub
+    container_name: "ojdl2-app"
+    network_mode: host
