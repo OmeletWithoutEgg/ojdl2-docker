@@ -9,8 +9,6 @@ RUN cd /ojdl2 && npm install && npm run build
 
 RUN cd /ojdl2/isolate && make isolate && make install
 
-COPY languages.js /ojdl2/src/common/languages.js
-
 COPY run_server.sh /ojdl2/run_server.sh
 RUN chmod +x /ojdl2/run_server.sh
 
